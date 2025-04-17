@@ -2,14 +2,17 @@ import { useState } from 'react';
 import styles from './AquariumForm.module.css';
 import { getRecommendation } from '../../api/mockApi';
 
-export default function AquariumForm() {
+type AquariumFormProps = {
+  onRecommendation: (rec: { recommendation: string; timestamp: string }) => void;
+};
+
+export default function AquariumForm({ onRecommendation }: AquariumFormProps) {
   const [volume, setVolume] = useState<number>(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Inside handleSubmit:
     const response = await getRecommendation({ volume });
-    console.log(response); // Later, store this in state/history
+    onRecommendation(response); // Send to parent
   };
 
   return (
