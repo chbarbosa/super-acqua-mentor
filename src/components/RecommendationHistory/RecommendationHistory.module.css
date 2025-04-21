@@ -28,4 +28,18 @@
   
   .recommendation {
     margin: 0.5rem 0 0;
+  }.header {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 0.25rem;
+  }
+  
+  .aiBadge {
+    background: #4CAF50;
+    color: white;
+    padding: 0.1rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
   }

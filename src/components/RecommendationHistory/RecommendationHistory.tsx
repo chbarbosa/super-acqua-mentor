@@ -3,6 +3,7 @@ import styles from './RecommendationHistory.module.css';
 type Recommendation = {
   recommendation: string;
   timestamp: string;
+  aiModel: string;
 };
 
 type RecommendationHistoryProps = {
@@ -19,10 +20,11 @@ export default function RecommendationHistory({ recommendations }: Recommendatio
         <ul className={styles.list}>
           {recommendations.map((rec, index) => (
             <li key={index} className={styles.item}>
-              <time className={styles.time}>
-                {new Date(rec.timestamp).toLocaleString()}
-              </time>
-              <p className={styles.recommendation}>{rec.recommendation}</p>
+              <div className={styles.header}>
+                <span className={styles.aiBadge}>{rec.aiModel}</span>
+                <time>{new Date(rec.timestamp).toLocaleString()}</time>
+              </div>
+              <p>{rec.recommendation}</p>
             </li>
           ))}
         </ul>
