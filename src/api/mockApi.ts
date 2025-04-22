@@ -1,28 +1,75 @@
-type Recommendation = {
-  recommendation: string;
+// Types
+export type AquariumParams = {
+  volumeLiters: number;
+  ph: number;
+  temperature: number;
+  // Add all other parameters
+};
+
+export type Recommendation = {
+  id: string;
+  message: string;
+  aiModel: string;
   timestamp: string;
 };
 
-type AIResponseMap = {
-  [key: string]: string;
-};
+const INITIAL_RECOMMENDATIONS: Recommendation[] = [
+  {
+    id: '1',
+    message: "Initial advice: Perform 25% water change weekly",
+    aiModel: 'gpt4',
+    timestamp: '2023-10-01T10:00:00Z'
+  },
+  {
+    id: '2',
+    message: "System check: Clean filter media monthly",
+    aiModel: 'claude',
+    timestamp: '2023-10-05T14:30:00Z'
+  }
+];
 
-const AI_RESPONSES: AIResponseMap = {
-  gpt4: "GPT-4 recommends: Change 25% water weekly and monitor pH levels.",
-  claude: "Claude suggests: Test ammonia levels and reduce feeding slightly.",
-  gemini: "Google advises: Increase aeration and check filter media."
-};
+let mockDB: Recommendation[] = [...INITIAL_RECOMMENDATIONS];
 
-export const getRecommendation = async (data: { 
-  volume: number;
-  aiModel: string;
-}): Promise<Recommendation> => {
+export const fetchRecommendations = async (): Promise<Recommendation[]> => {
+  // In real app, this would be: fetch('/api/recommendations')
   return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        recommendation: `${AI_RESPONSES[data.aiModel]} (for ${data.volume}L tank)`,
-        timestamp: new Date().toISOString(),
-      });
-    }, 1000);
+    // Simulate network variability (0.1-0.5s delay)
+    const delay = 100 + Math.random() * 400; 
+    setTimeout(() => resolve([...mockDB]), delay);
   });
+};
+
+// Generate deterministic mock responses
+export const getRecommendation = (
+  params: AquariumParams, 
+  aiModel: string
+): Recommendation => {
+  const response: Recommendation = {
+    id: crypto.randomUUID(),
+    message: generateAIResponse(params, aiModel),
+    aiModel,
+    timestamp: new Date().toISOString(),
+  };
+  
+  mockDB.unshift(response); // Add to "DB"
+  return response;
+};
+
+// Fetch history (no delay)
+export const getHistory = (): Recommendation[] => [...mockDB];
+
+// AI response logic
+const generateAIResponse = (
+  params: AquariumParams, 
+  aiModel: string
+): string => {
+  const { volumeLiters, ph } = params;
+  
+  const responses: Record<string, string> = {
+    gpt4: `GPT-4: For ${volumeLiters}L, ${ph > 7 ? 'lower' : 'raise'} pH slightly.`,
+    claude: `Claude: ${volumeLiters > 50 ? 'Increase' : 'Maintain'} water changes.`,
+    gemini: `Gemini: Test ammonia if pH reaches ${ph + 0.5}.`
+  };
+  
+  return responses[aiModel] || "No recommendation";
 };

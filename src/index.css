@@ -13,4 +13,26 @@ body {
 .app {
   max-width: 800px;
   margin: 0 auto;
+}.loading-spinner {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #4CAF50;
+}
+
+/* Optional spinner animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.loading-spinner::after {
+  content: "";
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-left: 0.5rem;
+  border: 2px solid #ddd;
+  border-top-color: #4CAF50;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }

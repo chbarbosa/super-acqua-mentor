@@ -1,10 +1,6 @@
+import { Recommendation } from '../../api/mockApi';
 import styles from './RecommendationHistory.module.css';
 
-type Recommendation = {
-  recommendation: string;
-  timestamp: string;
-  aiModel: string;
-};
 
 type RecommendationHistoryProps = {
   recommendations: Recommendation[];
@@ -24,7 +20,7 @@ export default function RecommendationHistory({ recommendations }: Recommendatio
                 <span className={styles.aiBadge}>{rec.aiModel}</span>
                 <time>{new Date(rec.timestamp).toLocaleString()}</time>
               </div>
-              <p>{rec.recommendation}</p>
+              <p>{rec.message}</p>
             </li>
           ))}
         </ul>
