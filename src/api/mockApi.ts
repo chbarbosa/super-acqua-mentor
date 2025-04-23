@@ -31,11 +31,9 @@ const INITIAL_RECOMMENDATIONS: Recommendation[] = [
 let mockDB: Recommendation[] = [...INITIAL_RECOMMENDATIONS];
 
 export const fetchRecommendations = async (): Promise<Recommendation[]> => {
-  // In real app, this would be: fetch('/api/recommendations')
+  // fetch('/api/recommendations')
   return new Promise((resolve) => {
-    // Simulate network variability (0.1-0.5s delay)
-    const delay = 100 + Math.random() * 400; 
-    setTimeout(() => resolve([...mockDB]), delay);
+    () => resolve([...mockDB]);
   });
 };
 
@@ -54,9 +52,6 @@ export const getRecommendation = (
   mockDB.unshift(response); // Add to "DB"
   return response;
 };
-
-// Fetch history (no delay)
-export const getHistory = (): Recommendation[] => [...mockDB];
 
 // AI response logic
 const generateAIResponse = (
