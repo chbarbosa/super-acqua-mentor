@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .main-nav {
@@ -10,6 +12,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100%;
 }
 
 .main-nav ul {
@@ -18,6 +21,7 @@
   padding: 0;
   display: flex;
   gap: 2rem;
+  justify-content: center;
 }
 
 .main-nav a {

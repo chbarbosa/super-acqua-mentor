@@ -7,8 +7,8 @@ const Layout: React.FC = () => {
     <div className="layout">
       <nav className="main-nav">
         <ul>
+            <li><Link to="/aquarium">Aquarium</Link></li>
           <li><Link to="/recommendation">Recommendation</Link></li>
-          <li><Link to="/aquarium">Aquarium</Link></li>
           <li><Link to="/history">History</Link></li>
         </ul>
       </nav>
