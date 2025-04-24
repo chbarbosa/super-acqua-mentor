@@ -3,6 +3,9 @@ import AquariumForm from './components/AquariumForm/AquariumForm';
 import RecommendationHistory from './components/RecommendationHistory/RecommendationHistory';
 import { fetchRecommendations, Recommendation } from './api/mockApi';
 import './index.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import RecommendationForm from './components/RecommendationForm/RecommendationForm';
+import Layout from './Layout';
 
 export default function App() {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
@@ -47,10 +50,15 @@ export default function App() {
   }
 
   return (
-    <div className="app">
-      <h1>Super-Acqua-Mentor</h1>
-      <AquariumForm onRecommendation={handleNewRecommendation} />
-      <RecommendationHistory recommendations={recommendations} />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Navigate to="/recommendation" replace />} />
+          <Route path="aquarium" element={<AquariumForm onRecommendation={handleNewRecommendation} />} />
+          <Route path="recommendation" element={<RecommendationForm />} />
+          <Route path="history" element={<RecommendationHistory recommendations={recommendations} />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
