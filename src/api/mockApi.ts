@@ -33,7 +33,9 @@ let mockDB: Recommendation[] = [...INITIAL_RECOMMENDATIONS];
 export const fetchRecommendations = async (): Promise<Recommendation[]> => {
   // fetch('/api/recommendations')
   return new Promise((resolve) => {
-    () => resolve([...mockDB]);
+    setTimeout(() => {
+      resolve([...mockDB]);  
+    }, 750);
   });
 };
 
