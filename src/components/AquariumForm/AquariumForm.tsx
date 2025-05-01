@@ -1,136 +1,124 @@
-import { useState } from 'react';
-import { getRecommendation, Recommendation } from '../../api/mockApi';
-import styles from './AquariumForm.module.css';
+import React, { useState, FormEvent } from 'react';
+import './AquariumForm.css';
 
-const AI_OPTIONS = [
-  { id: 'gpt4', name: 'GPT-4' },
-  { id: 'claude', name: 'Claude 3' },
-  { id: 'gemini', name: 'Gemini' },
-];
+interface AquariumSetup {
+  volumeLiters: number;
+  faunaDescription: string;
+  floraDescription: string;
+  substrateDescription: string;
+  hasFilter: boolean;
+  hasHeater: boolean;
+  hasLighting: boolean;
+  setupDate: string;
+}
 
-type AquariumFormProps = {
-  onRecommendation: (rec: Recommendation) => void;
-};
-
-export default function AquariumForm({ onRecommendation }: AquariumFormProps) {
-  const [formData, setFormData] = useState({
+const AquariumForm: React.FC = () => {
+  const [formData, setFormData] = useState<AquariumSetup>({
     volumeLiters: 0,
-    ph: 7.0,
-    temperature: 24,
-    // Add other fields as needed
+    faunaDescription: '',
+    floraDescription: '',
+    substrateDescription: '',
+    hasFilter: false,
+    hasHeater: false,
+    hasLighting: false,
+    setupDate: new Date().toISOString().split('T')[0]
   });
-  const [selectedAI, setSelectedAI] = useState(AI_OPTIONS[0].id);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: name === 'volumeLiters' || name === 'ph' || name === 'temperature' 
-        ? Number(value) 
-        : value,
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const recommendation = await getRecommendation(formData, selectedAI);
-      onRecommendation(recommendation);
-      
-      // Reset form
-      setFormData({
-        volumeLiters: 0,
-        ph: 7.0,
-        temperature: 24,
-      });
-    } catch (err) {
-      console.error('Failed to get recommendation:', err);
-    } finally {
-      setIsSubmitting(false);
-    }
+    console.log('Aquarium setup:', formData);
+    // Add your submission logic here
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <div className={styles.field}>
-        <label className={styles.label}>
-          Volume (Liters):
+    <div className="aquarium-form">
+      <h2>Register Aquarium Setup</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="volumeLiters">Volume (liters)</label>
           <input
             type="number"
-            name="volumeLiters"
-            min="0"
+            id="volumeLiters"
             value={formData.volumeLiters}
-            onChange={handleInputChange}
-            className={styles.input}
+            onChange={(e) => setFormData({...formData, volumeLiters: Number(e.target.value)})}
             required
           />
-        </label>
-      </div>
+        </div>
 
-      <div className={styles.field}>
-        <label className={styles.label}>
-          pH Level:
+        <div className="form-group">
+          <label htmlFor="faunaDescription">Fauna Description</label>
+          <textarea
+            id="faunaDescription"
+            value={formData.faunaDescription}
+            onChange={(e) => setFormData({...formData, faunaDescription: e.target.value})}
+            placeholder="Describe the fish and other animals in your aquarium"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="floraDescription">Flora Description</label>
+          <textarea
+            id="floraDescription"
+            value={formData.floraDescription}
+            onChange={(e) => setFormData({...formData, floraDescription: e.target.value})}
+            placeholder="Describe the plants in your aquarium"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="substrateDescription">Substrate Description</label>
+          <textarea
+            id="substrateDescription"
+            value={formData.substrateDescription}
+            onChange={(e) => setFormData({...formData, substrateDescription: e.target.value})}
+            placeholder="Describe the substrate used"
+          />
+        </div>
+
+        <div className="form-group checkboxes">
+          <label>
+            <input
+              type="checkbox"
+              checked={formData.hasFilter}
+              onChange={(e) => setFormData({...formData, hasFilter: e.target.checked})}
+            />
+            Filter System
+          </label>
+
+          <label>
+            <input
+              type="checkbox"
+              checked={formData.hasHeater}
+              onChange={(e) => setFormData({...formData, hasHeater: e.target.checked})}
+            />
+            Heater
+          </label>
+
+          <label>
+            <input
+              type="checkbox"
+              checked={formData.hasLighting}
+              onChange={(e) => setFormData({...formData, hasLighting: e.target.checked})}
+            />
+            Lighting System
+          </label>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="setupDate">Setup Date</label>
           <input
-            type="number"
-            name="ph"
-            min="0"
-            max="14"
-            step="0.1"
-            value={formData.ph}
-            onChange={handleInputChange}
-            className={styles.input}
+            type="date"
+            id="setupDate"
+            value={formData.setupDate}
+            onChange={(e) => setFormData({...formData, setupDate: e.target.value})}
             required
           />
-        </label>
-      </div>
+        </div>
 
-      <div className={styles.field}>
-        <label className={styles.label}>
-          Temperature (°C):
-          <input
-            type="number"
-            name="temperature"
-            min="0"
-            max="40"
-            value={formData.temperature}
-            onChange={handleInputChange}
-            className={styles.input}
-            required
-          />
-        </label>
-      </div>
-
-      <div className={styles.field}>
-        <label className={styles.label}>
-          AI Model:
-          <select
-            value={selectedAI}
-            onChange={(e) => setSelectedAI(e.target.value)}
-            className={styles.select}
-          >
-            {AI_OPTIONS.map((ai) => (
-              <option key={ai.id} value={ai.id}>
-                {ai.name}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-
-      <button 
-        type="submit" 
-        className={styles.button}
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? (
-          <span className={styles.spinner} aria-label="Loading"></span>
-        ) : (
-          'Get Recommendation'
-        )}
-      </button>
-    </form>
+        <button type="submit" className="submit-button">Register Aquarium</button>
+      </form>
+    </div>
   );
-}
+};
+
+export default AquariumForm;

@@ -1,12 +1,45 @@
-import { Recommendation } from '../../api/mockApi';
+import { useEffect, useState } from 'react';
+import { fetchRecommendations, Recommendation } from '../../api/mockApi';
 import styles from './RecommendationHistory.module.css';
 
+export default function RecommendationHistory() {
+  
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
 
-type RecommendationHistoryProps = {
-  recommendations: Recommendation[];
-};
+  // Load initial recommendations
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await fetchRecommendations();
+        setRecommendations(data);
+      } catch (err) {
+        setError('Failed to load recommendations');
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-export default function RecommendationHistory({ recommendations }: RecommendationHistoryProps) {
+    loadData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="app">
+        <div className="loading-spinner">Loading aquarium history...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="app">
+        <div className="error-message">{error}</div>
+      </div>
+    );
+  }
   return (
     <div className={styles.history}>
       <h2>Recommendation History</h2>
