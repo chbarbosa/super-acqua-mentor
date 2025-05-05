@@ -1,7 +1,98 @@
 .container {
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .list {
+  margin-top: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
+.deleteButton {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.9;
+}
+
+.deleteButton:hover {
+  background-color: #c0392b;
+  opacity: 1;
+  transform: scale(1.01);
+}
+
+.details p {
+  margin: 0.75rem 0;
+  line-height: 1.5;
+  color: #34495e;
+}
+
+.details strong {
+  color: #2c3e50;
+}
+
+.features {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.features span {
+  background-color: #f0f0f0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  color: #666;
+  transition: background-color 0.3s ease;
+}
+
+.features span:hover {
+  background-color: #e0e0e0;
+}
+
+.error {
+  color: #e74c3c;
+  padding: 1rem;
+  text-align: center;
+  background-color: #fee;
+  border-radius: 4px;
   margin-top: 1rem;
 }

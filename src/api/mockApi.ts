@@ -13,6 +13,18 @@ export type Recommendation = {
   timestamp: string;
 };
 
+export type Aquarium = {
+  id: string;
+  volumeLiters: number;
+  faunaDescription: string;
+  floraDescription: string;
+  substrateDescription: string;
+  hasFilter: boolean;
+  hasHeater: boolean;
+  hasLighting: boolean;
+  setupDate: string;
+};
+
 const INITIAL_RECOMMENDATIONS: Recommendation[] = [
   {
     id: '1',
@@ -28,13 +40,67 @@ const INITIAL_RECOMMENDATIONS: Recommendation[] = [
   }
 ];
 
+const INITIAL_AQUARIUMS: Aquarium[] = [
+  {
+    id: '1',
+    volumeLiters: 100,
+    faunaDescription: 'Neon Tetras, Corydoras',
+    floraDescription: 'Amazon Sword, Java Fern',
+    substrateDescription: 'Fine gravel substrate',
+    hasFilter: true,
+    hasHeater: true,
+    hasLighting: true,
+    setupDate: '2024-01-15'
+  },
+  {
+    id: '2',
+    volumeLiters: 200,
+    faunaDescription: 'Guppies, Cherry Shrimp',
+    floraDescription: 'Dwarf Hairgrass, Anubias',
+    substrateDescription: 'Aqua soil with sand',
+    hasFilter: true,
+    hasHeater: true,
+    hasLighting: true,
+    setupDate: '2024-02-20'
+  },
+  {
+    id: '3',
+    volumeLiters: 50,
+    faunaDescription: 'Betta fish',
+    floraDescription: 'Water Wisteria, Moss Ball',
+    substrateDescription: 'Black sand',
+    hasFilter: true,
+    hasHeater: true,
+    hasLighting: false,
+    setupDate: '2024-03-10'
+  }
+];
+
 let mockDB: Recommendation[] = [...INITIAL_RECOMMENDATIONS];
+let aquariumDB: Aquarium[] = [...INITIAL_AQUARIUMS];
 
 export const fetchRecommendations = async (): Promise<Recommendation[]> => {
   // fetch('/api/recommendations')
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve([...mockDB]);  
+    }, 750);
+  });
+};
+
+export const fetchAquariums = async (): Promise<Aquarium[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([...aquariumDB]);
+    }, 750);
+  });
+};
+
+export const deleteAquarium = async (id: string): Promise<void> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      aquariumDB = aquariumDB.filter(aquarium => aquarium.id !== id);
+      resolve();
     }, 750);
   });
 };
