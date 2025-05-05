@@ -35,7 +35,7 @@ const AquariumSelector: React.FC<AquariumSelectorProps> = ({ aquariums, onSelect
         onClick={handlePrevious}
         aria-label="Previous aquarium"
       >
-        ←
+        &lt;
       </button>
 
       <div 
@@ -62,7 +62,7 @@ const AquariumSelector: React.FC<AquariumSelectorProps> = ({ aquariums, onSelect
         onClick={handleNext}
         aria-label="Next aquarium"
       >
-        →
+        &gt;
       </button>
 
       <div className={styles.pagination}>
