@@ -5,6 +5,7 @@
   justify-content: center;
   padding: 2rem 0;
   margin: 2rem 0;
+  gap: 1rem;  /* Add small gap between elements */
 }
 
 .card {
@@ -35,23 +36,22 @@
   font-size: 1.5rem;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
   transition: all 0.3s ease;
 }
 
 .arrow:hover {
   background: #f8f9fa;
-  transform: translateY(-50%) scale(1.1);
+  transform: scale(1.1);
 }
 
 .left {
-  left: 1rem;
+  margin-right: -3px;
+  z-index: 1;
 }
 
 .right {
-  right: 1rem;
+  margin-left: -3px;
+  z-index: 1;
 }
 
 .pagination {
