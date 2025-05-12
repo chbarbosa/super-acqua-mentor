@@ -14,6 +14,7 @@
 
 .formGroup {
   margin-bottom: 1.5rem;
+  position: relative;
 }
 
 .formGroup label {
@@ -76,4 +77,16 @@
   background-color: #fef2f2;
   border-radius: 4px;
   margin-bottom: 1rem;
+}
+
+.inputError {
+  border-color: #e74c3c !important;
+  background-color: #fff5f5;
+}
+
+.errorMessage {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
 }
