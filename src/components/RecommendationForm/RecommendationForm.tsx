@@ -160,7 +160,7 @@ const RecommendationForm: React.FC = () => {
         onSelect={setSelectedAquarium} 
       />
       
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label htmlFor="tpa">Water Change Frequency:</label>
             <select id="tpa" name="tpa" value={parameters.tpa} onChange={handleChange}>
@@ -171,7 +171,6 @@ const RecommendationForm: React.FC = () => {
             </select>
           </div>
 
-          <div className={styles.parameterGrid}>
             <div className={styles.formGroup}>
               <label htmlFor="ph">pH:</label>
               <input 
@@ -309,7 +308,6 @@ const RecommendationForm: React.FC = () => {
               />
               {errors.photoperiod && <span className={styles.errorMessage}>{errors.photoperiod}</span>}
             </div>
-          </div>
 
           <div className={styles.formGroup}>
             <label htmlFor="recentProblems">Recent Problems:</label>
